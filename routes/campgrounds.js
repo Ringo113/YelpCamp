@@ -28,9 +28,15 @@ router.post('/', isLoggedIn, upload.single('image'), async (req, res) => {
   res.redirect(`/campgrounds/${campground._id}`);
 });
 
-// SHOW: view one campground
+// SHOW: view one campground with populated reviews + authors
 router.get('/:id', async (req, res) => {
-  const campground = await Campground.findById(req.params.id).populate('author');
+  const campground = await Campground.findById(req.params.id)
+    .populate({
+      path: 'reviews',
+      populate: { path: 'author' }
+    })
+    .populate('author');
+
   res.render('campgrounds/show', { campground });
 });
 
