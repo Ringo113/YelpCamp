@@ -41,7 +41,7 @@
                   const sum = camp.reviews.reduce((acc, r) => acc + (r.rating || 0), 0);
                   const avg = (sum / camp.reviews.length).toFixed(1);
               %>
-                <p class="text-muted">⭐ <%= avg %> / 5 (<%= camp.reviews.length %> reviews)</p>
+                <p class="text-muted">⭐ <%= avg %> / 5.0 (<%= camp.reviews.length %> reviews)</p>
               <% } else { %>
                 <p class="text-muted">No reviews yet</p>
               <% } %>
