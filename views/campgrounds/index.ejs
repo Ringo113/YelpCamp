@@ -36,8 +36,18 @@
               <h5 class="card-title"><%= camp.title %></h5>
               <h6 class="card-subtitle mb-2 text-muted"><%= camp.location %></h6>
               <p class="card-text">$<%= camp.price %></p>
+              
+              <% if (camp.reviews.length > 0) { 
+                  const sum = camp.reviews.reduce((acc, r) => acc + (r.rating || 0), 0);
+                  const avg = (sum / camp.reviews.length).toFixed(1);
+              %>
+                <p class="text-muted">⭐ <%= avg %> / 5 (<%= camp.reviews.length %> reviews)</p>
+              <% } else { %>
+                <p class="text-muted">No reviews yet</p>
+              <% } %>
+
               <a href="/campgrounds/<%= camp._id %>" class="btn btn-primary btn-sm">View</a>
-              <% if (currentUser && camp.author && camp.author._id.equals(currentUser._id)) { %>
+              <% if (currentUser && camp.author && String(camp.author._id) === String(currentUser._id)) { %>
                 <form action="/campgrounds/<%= camp._id %>?_method=DELETE" method="POST" class="d-inline">
                   <button class="btn btn-danger btn-sm"
                           onclick="return confirm('Are you sure you want to delete this campground?')">
