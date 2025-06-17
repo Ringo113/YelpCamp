@@ -20,7 +20,6 @@ const CampgroundSchema = new Schema({
   ]
 });
 
-// 当 campground 被删除时，自动删除它所有的评论
 CampgroundSchema.post('findOneAndDelete', async function (doc) {
   if (doc) {
     await Review.deleteMany({

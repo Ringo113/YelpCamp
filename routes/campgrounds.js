@@ -10,8 +10,15 @@ const isAuthor = require('../middleware/isAuthor');
 
 // INDEX: view all campgrounds
 router.get('/', async (req, res) => {
-  const campgrounds = await Campground.find({});
+  const campgrounds = await Campground.find({}).populate('reviews');
   res.render('campgrounds/index', { campgrounds });
+});
+
+// GET /api/campgrounds - return JSON data
+router.get('/api/campgrounds', async (req, res) => {
+  const campgrounds = await Campground.find({})
+    .populate('reviews'); // include review data for avg rating
+  res.json(campgrounds);
 });
 
 // NEW: show form to create campground (only if logged in)
